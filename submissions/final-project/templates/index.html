@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+</head>
+<body>
+    <h1>Password Manager</h1>
+    
+    <h2>All Entries:</h2>
+    
+    {% if entries %}
+        <ul>
+            {% for entry in entries %}
+                <li>
+                    <strong>ID:</strong> {{ entry[0] }}<br>
+                    <strong>Website:</strong> {{ entry[1] }}<br>
+                    <strong>Email:</strong> {{ entry[2] }}<br>
+                    <strong>Password:</strong> {{ entry[3] }}<br>
+                    <form method="post" action="{{ url_for('update_entry', entry_id=entry[0]) }}">
+                        <label for="email">New Email:</label>
+                        <input type="email" name="email" required><br>
+                        
+                        <label for="password">New Password:</label>
+                        <input type="password" name="password" required><br>
+                        
+                        <button type="submit">Update</button>
+                    </form>
+                    <a href="{{ url_for('delete_entry', entry_id=entry[0]) }}">Delete</a>
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No entries found.</p>
+    {% endif %}
+
+    <h2>Add New Entry:</h2>
+    
+    <form method="post" action="{{ url_for('add_entry') }}">
+        <label for="website">Website:</label>
+        <input type="text" name="website" required><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" name="email" required><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
+        
+        <button type="submit">Add Entry</button>
+    </form>
+    
+</body>
+</html>
